@@ -44,6 +44,12 @@ gem "bootsnap", require: false
 # Devise gem to manage sessions
 gem 'devise'
 
+# Bootstrap 5 & Sass
+gem "bootstrap", "~> 5.3.2"
+
+# Integrate SassC-Ruby with Rails!
+gem "sassc-rails"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
