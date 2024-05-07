@@ -50,6 +50,9 @@ gem "bootstrap", "~> 5.3.2"
 # Integrate SassC-Ruby with Rails!
 gem "sassc-rails"
 
+# Devise-Bootstrap gem
+gem 'devise-bootstrap-views', '~> 1.0'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
