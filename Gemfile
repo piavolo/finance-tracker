@@ -53,6 +53,9 @@ gem "sassc-rails"
 # Devise-Bootstrap gem
 gem 'devise-bootstrap-views', '~> 1.0'
 
+# IEX-API gem
+gem 'iex-ruby-client'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
