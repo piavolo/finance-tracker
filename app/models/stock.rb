@@ -15,16 +15,17 @@ class Stock < ApplicationRecord
  
     def self.company_lookup(ticker_symbol)
         response = HTTParty.get("https://www.alphavantage.co/query?function=OVERVIEW&symbol=#{ticker_symbol}&apikey=#{Rails.application.credentials.alphavantage[:key]}")
-        response.code == 200 ? { symbol: ticker_symbol, name: response.parsed_response['Name'] }.to_json : nil
+        response.code == 200 && response.parsed_response.is_a?(Hash) ? response.parsed_response['Name'] : nil
+        # response.code == 200 ? { symbol: ticker_symbol, name: response.parsed_response['Name'] }.to_json : nil
     end
  
     def self.new_lookup(ticker_symbol)
         response = HTTParty.get("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=#{ticker_symbol}&apikey=#{Rails.application.credentials.alphavantage[:key]}")
-        if response.code == 200 && response.parsed_response['Global Quote']
+        if response.code == 200 && response.parsed_response.is_a?(Hash) && response.parsed_response['Global Quote']
             last_price = response.parsed_response['Global Quote']['05. price']
             name = company_lookup(ticker_symbol)
-            { symbol: ticker_symbol, name: name, last_price: last_price }.to_json
-            # { symbol: ticker_symbol, last_price: last_price, company_info: company_lookup(ticker_symbol) }.to_json
+            new(ticker: ticker_symbol, name: name, last_price: last_price)
+            # { symbol: ticker_symbol, name: name, last_price: last_price }.to_json
         else
             nil
         end
