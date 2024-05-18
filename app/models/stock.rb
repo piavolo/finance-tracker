@@ -24,8 +24,12 @@ class Stock < ApplicationRecord
         if response.code == 200 && response.parsed_response.is_a?(Hash) && response.parsed_response['Global Quote']
             last_price = response.parsed_response['Global Quote']['05. price']
             name = company_lookup(ticker_symbol)
-            new(ticker: ticker_symbol, name: name, last_price: last_price)
-            # { symbol: ticker_symbol, name: name, last_price: last_price }.to_json
+            begin
+                new(ticker: ticker_symbol, name: name, last_price: last_price)
+                # { symbol: ticker_symbol, name: name, last_price: last_price }.to_json
+            rescue => exception
+                nil
+            end
         else
             nil
         end
