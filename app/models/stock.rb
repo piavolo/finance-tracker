@@ -10,22 +10,32 @@
 # end
 
 require 'httparty'
- 
+
 class Stock < ApplicationRecord
- 
-    def self.company_lookup(ticker_symbol)
+
+    def self.company_info(ticker_symbol)
         response = HTTParty.get("https://www.alphavantage.co/query?function=OVERVIEW&symbol=#{ticker_symbol}&apikey=#{Rails.application.credentials.alphavantage[:key]}")
-        response.code == 200 && response.parsed_response.is_a?(Hash) ? response.parsed_response['Name'] : nil
-        # response.code == 200 ? { symbol: ticker_symbol, name: response.parsed_response['Name'] }.to_json : nil
+        response.code == 200 && response.parsed_response.is_a?(Hash) ? response.parsed_response : nil
     end
- 
+
+    def self.company_name(ticker_symbol)
+        info = company_info(ticker_symbol)
+        info ? info['Name'] : nil
+    end
+
+    def self.company_symbol(ticker_symbol)
+        info = company_info(ticker_symbol)
+        info ? info['Symbol'] : nil
+    end
+
     def self.new_lookup(ticker_symbol)
         response = HTTParty.get("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=#{ticker_symbol}&apikey=#{Rails.application.credentials.alphavantage[:key]}")
         if response.code == 200 && response.parsed_response.is_a?(Hash) && response.parsed_response['Global Quote']
             last_price = response.parsed_response['Global Quote']['05. price']
-            name = company_lookup(ticker_symbol)
+            name = company_name(ticker_symbol)
+            symbol = company_symbol(ticker_symbol)
             begin
-                new(ticker: ticker_symbol, name: name, last_price: last_price)
+                new(ticker: symbol, name: name, last_price: last_price)
                 # { symbol: ticker_symbol, name: name, last_price: last_price }.to_json
             rescue => exception
                 nil
