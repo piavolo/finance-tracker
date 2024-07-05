@@ -18,3 +18,7 @@
 <%= turbo_frame_tag "result" do %>
     <%= render 'users/result' %>
 <% end %>
+
+<% unless @tracked_stocks.empty? %>
+    <%= render 'stocks/list' %>
+<% end %>
