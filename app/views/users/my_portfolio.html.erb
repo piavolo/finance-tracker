@@ -2,7 +2,7 @@
 
 <div class="search-area">
     <h3>Search Stocks</h3>
-    <%= form_with url: search_stock_path, method: :get, data: { turbo_frame: "result" } do %>
+    <%= form_with url: search_stock_path, method: :get, data: {turbo_frame: "result"} do %>
         <div class="form-group row">
             <div class="col-sm-9 no-right-padding">
                 <%= text_field_tag :stock, nil, placeholder: "Stock ticker symbol", autofocus: true, class: "form-control form-control-lg" %>
@@ -19,6 +19,6 @@
     <%= render 'users/result' %>
 <% end %>
 
-<% unless @tracked_stocks.empty? %>
+<% unless @tracked_stocks&.empty? %>
     <%= render 'stocks/list' %>
 <% end %>
