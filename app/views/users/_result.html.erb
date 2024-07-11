@@ -9,14 +9,8 @@
           <%= submit_tag "Add to portfolio", class: "btn btn-success" %>
         <% end %>
       <% else %>
-        <span class="badge badge-secondary">
-          You are already tracking 
-          <% unless current_user.under_stock_limit? %>
-            10 stocks
-          <% end %>
-          <% if current_user.stock_already_tracked?(@stock.ticker) %>
-            this stock
-          <% end %>
+        <span class="badge badge-secondary stock-message">
+          <%= stock_tracking_message(current_user, @stock) %>
         </span>
       <% end %>
   </div>
