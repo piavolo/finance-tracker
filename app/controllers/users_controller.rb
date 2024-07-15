@@ -9,15 +9,17 @@ class UsersController < ApplicationController
 
   def search
     if params[:friend].present?
-      @friend = params[:friend]
+      @friend = User.find_by(email: params[:friend])
       if @friend
         respond_to do |format|
           format.turbo_stream { render turbo_stream: turbo_stream.replace("result", partial: "users/friend_result", locals: { friend: @friend }) }
+          format.html { render 'users/my_friends' }
         end
       else
         respond_to do |format|
           flash.now[:alert] = "User not found."
           format.turbo_stream { render turbo_stream: turbo_stream.replace("result", partial: "users/friend_result", locals: { friend: nil }) }
+          format.html { render 'users/my_friends' }
         end
       end
     else
