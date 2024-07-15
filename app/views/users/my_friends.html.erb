@@ -5,7 +5,7 @@
     <%= form_with url: search_friend_path, method: :get, data: {turbo_frame: "result"} do %>
         <div class="form-group row">
             <div class="col-sm-9 no-right-padding">
-                <%= text_field_tag :friend, params[:friend], placeholder: "Stock ticker symbol", autofocus: true, class: "form-control form-control-lg" %>
+                <%= text_field_tag :friend, params[:friend], placeholder: "Name or email", autofocus: true, class: "form-control form-control-lg" %>
             </div>
             <div class="col-sm-3 no-left-padding">
                 <%= button_tag type: :submit, class: "btn btn-success" do %>
@@ -15,6 +15,10 @@
         </div>
     <% end %>
 </div>
+
+<%= turbo_frame_tag "result" do %>
+    <%= render 'users/result' %>
+<% end %>
 
 <% unless @friends&.empty? %>
   <%= render 'friends/list' %>

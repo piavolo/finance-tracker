@@ -1,0 +1,19 @@
+<% if @friend %>
+  <div class="card card-header results-block">
+      <strong>Email: </strong> <%= @friend.email %>
+      <strong>First Name: </strong> <%= @friend.first_name %>
+      <strong>Second Name: </strong> <%= @friend.last_name %>
+      <!-- <%= link_to "Follow fiend?", '#', class: "btn btn-success", method: :post %> -->
+      <%= form_with url: '#', method: :post, local: false do %>
+        <%= submit_tag "Follow friend?", class: "btn btn-success" %>
+      <% end %>
+  </div>
+<% elsif alert %>
+  <div class="alert alert-warning results-block">
+    <%= alert %>
+  </div>
+<% elsif notice %>
+  <div class="alert alert-success results-block">
+    <%= notice %>
+  </div>
+<% end %>
