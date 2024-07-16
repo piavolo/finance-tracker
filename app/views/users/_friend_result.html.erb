@@ -7,10 +7,15 @@
             <td><strong>Name: </strong> <%= friend.full_name %></td>
             <td><strong>Email: </strong> <%= friend.email %></td>
             <td><strong>Actions: </strong> <%= link_to "View Profile", '#', class: "btn btn-sm btn-success" %>
-            <!-- <%= link_to "Follow fiend?", '#', class: "btn btn-success", method: :post %> -->
-            <%= form_with url: '#', method: :post, local: false do %>
-              <%= submit_tag "Follow friend?", class: "btn btn-sm btn-success" %>
-            <% end %><td>
+            <% if current_user.not_friends_with?(friend.id) %>
+              <%= form_with url: '#', method: :post, local: false do %>
+                <%= submit_tag "Follow friend?", class: "btn btn-sm btn-success" %>
+              <% end %><td>
+            <% else %>
+              <span class="badge badge-secondary friend-message">
+                You are already friends with this user
+              </span>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
