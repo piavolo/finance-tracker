@@ -8,12 +8,12 @@
             <td><strong>Email: </strong> <%= friend.email %></td>
             <td><strong>Actions: </strong> <%= link_to "View Profile", '#', class: "btn btn-sm btn-success" %>
             <% if current_user.not_friends_with?(friend.id) %>
-              <%= form_with url: '#', method: :post, local: false do %>
+              <%= form_with url: friendships_path(friend: friend), method: :post do %>
                 <%= submit_tag "Follow friend?", class: "btn btn-sm btn-success" %>
               <% end %><td>
             <% else %>
               <span class="badge badge-secondary friend-message">
-                You are already friends with this user
+                You are friends.
               </span>
             <% end %>
           </tr>

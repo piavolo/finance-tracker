@@ -20,6 +20,8 @@
     <%= render 'users/friend_result' %>
 <% end %>
 
-<% unless @friends&.empty? %>
-  <%= render 'friends/list' %>
-<% end %>
+<div id="friends-table">
+    <% unless @friends&.empty? %>
+        <%= render 'friends/list' %>
+    <% end %>
+</div>
