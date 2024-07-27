@@ -15,7 +15,20 @@
                         <th scope="row"><%= stock.ticker %></th>
                         <td><%= stock.name %></td>
                         <td><%= stock.last_price %></td>
-                        <td><%= link_to "Remove", user_stock_path(stock), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn btn-sm btn-warning' %></td>
+                        <td>
+                            <% if current_user.can_track_stock?(stock.ticker) %>
+                                <%= form_with url: user_stocks_path(user: current_user, ticker: stock.ticker), method: :post, local: false do %>
+                                <%= submit_tag "Add to portfolio", class: "btn btn-success" %>
+                                <% end %>
+                            <% elsif current_user.id != @user.id %>
+                                <span class="badge badge-secondary stock-message">
+                                    <%= stock_tracking_message(current_user, stock) %>
+                                </span>
+                            <% end %>
+                            <% if current_user.id == @user.id %>
+                                <%= link_to "Remove", user_stock_path(stock), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn btn-sm btn-warning' %>
+                            <% end %>
+                        </td>
                     </tr>
                 <% end %>
             </tbody>

@@ -1,21 +1,23 @@
 <% if @search_performed && @friends && !@friends.empty? %>
   <div class="card card-header results-block">
-    <table class= "col-md-12">
+    <table class="col-md-12">
       <tbody>
         <% @friends.each do |friend| %>
           <tr>
             <td><strong>Name: </strong> <%= friend.full_name %></td>
             <td><strong>Email: </strong> <%= friend.email %></td>
-            <td><strong>Actions: </strong> <%= link_to "View Profile", '#', class: "btn btn-sm btn-success" %>
-            <% if current_user.not_friends_with?(friend.id) %>
-              <%= form_with url: friendships_path(friend: friend), method: :post do %>
-                <%= submit_tag "Follow friend?", class: "btn btn-sm btn-success" %>
-              <% end %><td>
-            <% else %>
-              <span class="badge badge-secondary friend-message">
-                You are friends.
-              </span>
-            <% end %>
+            <td><strong>Actions: </strong> <%= link_to "View Profile", user_path(friend), class: "btn btn-sm btn-success" %></td>
+            <td>
+              <% if current_user.not_friends_with?(friend.id) %>
+                <%= form_with url: friendships_path(friend: friend), method: :post do %>
+                  <%= submit_tag "Follow friend?", class: "btn btn-sm btn-success" %>
+                <% end %>
+              <% else %>
+                <span class="badge badge-secondary friend-message">
+                  You are friends.
+                </span>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
